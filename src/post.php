@@ -18,6 +18,12 @@ $messnum = $messnum + 1;
 
 $messagelist = new DOMDocument();
 $messagelist->load("backend.xml");
-print $messagelist->saveXML();
+// print $messagelist->saveXML();
+$domPost = $messagelist->createElement("post", "");
+$domPostid = $messagelist->createAttribute("id");
+$domPostid->value = (string)$messnum;
+$domPost->appendChild($domPostid);
+$messagelist->getElementsByTagName('board')->item(0)->appendChild($domPost);
 
+echo $messagelist->saveXML();
 ?>
