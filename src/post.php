@@ -6,11 +6,11 @@ if(isset($_REQUEST['ua'])){
 }
 
 // This block of code was borrowed from OLCC
-$message = $_REQUEST['message'];
-$message = str_replace(array('#{plus}#', '#{amp}#', '#{dcomma}#', '#{percent}#'), array(urlencode('+'), urlencode('&'), '%3B', '%25'), $message);
+// sanitize  $_REQUEST inputs
+$message = htmlentities($_REQUEST['message']);
+$ua = htmlentities($ua);
 
-$ua = str_replace(array('#{plus}#', '#{amp}#', '#{dcomma}#', '#{percent}#'), array(urlencode('+'), urlencode('&'), '%3B', '%25'), $ua);
-
+// I don't know if this should be escaped or not, please tell me
 $referer = $_REQUEST['posturl'];
 $referer = substr($referer, 0, strrpos($referer, '/')+1);
 // End of borrowed from OLCC block. Yes it's only variable declarations. But half the file is that so...
@@ -24,17 +24,23 @@ file_put_contents("messnum.txt", (string)$messnum);
 $messagelist = new DOMDocument();
 $messagelist->load("backend.xml");
 // print $messagelist->saveXML();
-$domPost = $messagelist->createElement("post", "");
+$domPost = $messagelist->createElement("post");
 $domPostid = $messagelist->createAttribute("id");
 $domPostid->value = (string)$messnum;
 $domPost->appendChild($domPostid);
 $domPosttime = $messagelist->createAttribute("time");
 $domPosttime->value = date("YmdHis");
 $domPost->appendChild($domPosttime);
-$domPostInfo = $messagelist->createElement("info", $ua);
-$domPost->appendChild($domPostInfo);
-$domPostMessage = $messagelist->createElement("message", $message);
-$domPost->appendChild($domPostMessage);
+
+// add info child to post
+// we append $ua as a TextNode to $domPostInfo
+// because createElement HTML escaping is very weird
+$domPostInfo = $messagelist->createElement("info");
+$domPost->appendChild($domPostInfo)->appendChild($messagelist->createTextNode($ua));
+
+// add message child to post (same as info)
+$domPostMessage = $messagelist->createElement("message");
+$domPost->appendChild($domPostMessage)->appendChild($messagelist->createTextNode($message));;
 
 $messagelist->getElementsByTagName('board')->item(0)->appendChild($domPost);
 //echo $messagelist->saveXML();
