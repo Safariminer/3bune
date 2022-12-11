@@ -37,6 +37,9 @@
                 border-radius:2px;
                 font-size: 16px;
             }
+            .highlighted{
+                background-color: red;
+            }
         </style>
     </head>
     <body onload="refreshIframe()">
@@ -44,9 +47,10 @@
         <div class="vert" style="background-color: #5bcefa80; border-radius: 50px 0px 0px 50px; width: 25%; text-align: center;">
             <h1>\\\ 3BUNE</h1>
             <h2>Frutiger Tribune Coin-coin</h2>
-            <p>Welcome to 3BUNE! 3BUNE is a small PHP tribune server designed for ease of setup.</p>
+            <p>Welcome to 3BUNE! 3BUNE is a small PHP tribune server designed for ease of setup.<br/><br/>Known issues:<br/>- Norloges stay until refresh<br/></p>
             <input type="text" id="ua" class="textinput" style="width: 100%;" placeholder="User-Agent"/>
-            <button id="send" class="send" onclick="refreshIframe()">Refresh</button>
+            <button id="send" class="send" onclick="refreshIframe()">Refresh</button><br/><br/>
+            <input type="number" id="refreshrate" placeholder="Refresh rate..." value="5000" minimum="500"/>
         </div>
         <div class="vert"></div>
         <div class="vert" style="background-color: #000000A0; width: 71%; border-radius: 0px 50px 50px 0px;">
@@ -58,26 +62,56 @@
         <div style="text-align: center;"><a style="color:white" href="https://pixabay.com/fr/photos/pissenlit-prairie-prairie-pissenlit-3382663/">Background Image</a></div>
     </body>
     <script>
-        var intervalID = window.setInterval(refreshIframe, 5000);
-
+        var intervalID = window.setInterval(refreshIframe, document.getElementById('refreshrate').value);
+        function ResetRefreshRate(){
+            if(document.getElementById('refreshrate').value < 500) document.getElementById('refreshrate').value = 500;
+            clearTimeout(intervalID)
+            intervalID = window.setInterval(refreshIframe, document.getElementById('refreshrate').value);
+        }
         var focused = document.activeElement;
 
         function TimeLookup(){
-            
-            $("time#" + event.target.id).css("background-color", "yellow");
+            $("." + event.target.innerHTML).addClass(".highlighted");
             sleep(5000);
-            $("time#" + event.target.id).css("background-color", "none");
+            $("." + event.target.innerHTML).removeClass(".highlighted");
         }
         
         document.onkeypress = function (e) {
             if (e.keyCode == 13){
                 if(document.activeElement.id == "message") PostToServer();
+                if(document.activeElement.id == "refreshrate")ResetRefreshRate();
             }
         };
         
+        String.prototype.toUnicode = function(){
+            var result = "";
+            for(var i = 0; i < this.length; i++){
+                // Assumption: all characters are < 0xffff
+                result += "\\u" + ("000" + this[i].charCodeAt(0).toString(16)).substr(-4);
+            }
+            return result;
+        };
+        var lastnorloge = "";
         function GetTime(){
             // alert(event.target.innerHTML);
+
             document.getElementById('message').value = "tag:" + event.target.innerHTML + " --- " + document.getElementById('message').value;
+            if(lastnorloge != ""){
+                var lasttemp = document.querySelectorAll(lastnorloge);
+                for (var i = 0; i < lasttemp.length; i++) {
+                    lasttemp[i].style.color = "white";
+                    lasttemp[i].style.backgroundColor = "black";
+                }
+            }
+            var selector = ".id" + event.target.innerHTML;
+            console.log(selector)
+            var temp = document.querySelectorAll(selector);
+            for (var i = 0; i < temp.length; i++) {
+                temp[i].style.color = "black";
+                temp[i].style.backgroundColor = "yellow";
+            }
+            lastnorloge = selector;
+            
         }
 
         function refreshIframe() {
@@ -85,7 +119,6 @@
                 response.text().then(function(text) {
                     document.getElementById('chat').innerHTML = text;
                     document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
-                    done();
                 });
             });
 

@@ -8,7 +8,7 @@ function TreatString($message): string{
     $finalmessage = preg_replace(
         "/^tag:([0-9]{14})/",
         
-        "tag:<span id=\"$1\" mouseover\"TimeLookup()\"" .
+        "tag:<span class=\"id$1\" mouseover\"TimeLookup()\"" .
         " onclick=\"GetTime()\">$1</span> ---",
         
         htmlentities($message));
@@ -22,7 +22,8 @@ $messagelist->load('backend.xml');
 $messages = $messagelist->getElementsByTagName('post');
 
 foreach($messages as $message){
-    echo "<time mouseover=\"TimeLookup()\" onclick=\"GetTime()\" id=\"" . $message->getAttribute('time') . "\">" . $message->getAttribute('time') . "</time> | " . htmlentities($message->childNodes->item(0)->textContent) . " : " . TreatString($message->childNodes->item(1)->textContent) . "<br/>";
+    echo "<time mouseover=\"TimeLookup()\" onclick=\"GetTime()\" class=\"id" . $message->getAttribute('time') . "\">" . $message->getAttribute('time') . "</time> | " . htmlentities($message->childNodes->item(0)->textContent) . " : " . TreatString($message->childNodes->item(1)->textContent) . "<br/>";
+
 }
 
 ?>
