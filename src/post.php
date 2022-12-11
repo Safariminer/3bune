@@ -1,11 +1,8 @@
 <?php
-$ua = "anonymousmoule";
+$ua = $_SERVER['HTTP_USER_AGENT'];
 
-// So this was borrowed from OLCC
-if(isset($_REQUEST['ua'])) {
-    $ua = $_REQUEST['ua'];
-}
-$message = $_REQUEST['postdata'];
+// This block of code was borrowed from OLCC
+$message = $_REQUEST['message'];
 $message = str_replace(array('#{plus}#', '#{amp}#', '#{dcomma}#', '#{percent}#'), array(urlencode('+'), urlencode('&'), '%3B', '%25'), $message);
 $referer = $_REQUEST['posturl'];
 $referer = substr($referer, 0, strrpos($referer, '/')+1);
@@ -15,6 +12,7 @@ $referer = substr($referer, 0, strrpos($referer, '/')+1);
 $messnumstring = file_get_contents("messnum.txt");
 $messnum = (int)$messnumstring;
 $messnum = $messnum + 1;
+file_put_contents("messnum", (string)$messnum);
 
 $messagelist = new DOMDocument();
 $messagelist->load("backend.xml");
@@ -23,7 +21,19 @@ $domPost = $messagelist->createElement("post", "");
 $domPostid = $messagelist->createAttribute("id");
 $domPostid->value = (string)$messnum;
 $domPost->appendChild($domPostid);
-$messagelist->getElementsByTagName('board')->item(0)->appendChild($domPost);
+$domPosttime = $messagelist->createAttribute("time");
+$domPosttime->value = date("YmdHis");
+$domPost->appendChild($domPosttime);
+$domPostInfo = $messagelist->createElement("info", $ua);
+$domPost->appendChild($domPostInfo);
+$domPostMessage = $messagelist->createElement("message", $message);
+$domPost->appendChild($domPostMessage);
 
-echo $messagelist->saveXML();
+$messagelist->getElementsByTagName('board')->item(0)->appendChild($domPost);
+//echo $messagelist->saveXML();
+$messagelist->save("backend.xml");
+echo file_get_contents("backend.xml");
+//echo $ua . "<br/>";
+//echo $message . "<br/>";
+//echo $referer . "<br/>";
 ?>

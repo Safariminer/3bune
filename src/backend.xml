@@ -1,2 +1,3 @@
-<board>
-</board>
+<?xml version="1.0"?>
+<board site="578b-70-82-220-95.ngrok.io">
+<post id="1" time="20221210222757"><info>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0</info><message>test</message></post><post id="1" time="20221210223301"><info>SafariSuridTech1</info><message/></post><post id="1" time="20221210223526"><info>SafariSuridTech1</info><message/></post><post id="1" time="20221210224003"><info>SafariSuridTech1</info><message>test</message></post><post id="1" time="20221210224146"><info>SafariSuridTech1</info><message>test</message></post></board>
