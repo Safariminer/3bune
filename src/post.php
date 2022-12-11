@@ -12,7 +12,7 @@ $referer = substr($referer, 0, strrpos($referer, '/')+1);
 $messnumstring = file_get_contents("messnum.txt");
 $messnum = (int)$messnumstring;
 $messnum = $messnum + 1;
-file_put_contents("messnum", (string)$messnum);
+file_put_contents("messnum.txt", (string)$messnum);
 
 $messagelist = new DOMDocument();
 $messagelist->load("backend.xml");
