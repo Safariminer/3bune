@@ -63,6 +63,7 @@
         var focused = document.activeElement;
 
         function TimeLookup(){
+            
             $("time#" + event.target.id).css("background-color", "yellow");
             sleep(5000);
             $("time#" + event.target.id).css("background-color", "none");

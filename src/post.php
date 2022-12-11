@@ -8,11 +8,9 @@ if(isset($_REQUEST['ua'])){
 // This block of code was borrowed from OLCC
 $message = $_REQUEST['message'];
 $message = str_replace(array('#{plus}#', '#{amp}#', '#{dcomma}#', '#{percent}#'), array(urlencode('+'), urlencode('&'), '%3B', '%25'), $message);
-$message = str_replace(array('<', '>'), array("⪬", "⩾"), $message);
-$message = str_replace(array('&lt', '&gt'), array("⪬", "⩾"), $message);
+
 $ua = str_replace(array('#{plus}#', '#{amp}#', '#{dcomma}#', '#{percent}#'), array(urlencode('+'), urlencode('&'), '%3B', '%25'), $ua);
-$ua = str_replace(array('<', '>'), array("⪬", "⩾"), $ua);
-$ua = str_replace(array('&lt', '&gt'), array("⪬", "⩾"), $ua);
+
 $referer = $_REQUEST['posturl'];
 $referer = substr($referer, 0, strrpos($referer, '/')+1);
 // End of borrowed from OLCC block. Yes it's only variable declarations. But half the file is that so...
