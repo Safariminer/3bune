@@ -39,18 +39,20 @@
             }
         </style>
     </head>
-    <body>
+    <body onload="refreshIframe()">
         <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
         <div class="vert" style="background-color: #5bcefa80; border-radius: 50px 0px 0px 50px; width: 25%; text-align: center;">
             <h1>\\\ 3BUNE</h1>
             <h2>Frutiger Tribune Coin-coin</h2>
             <p>Welcome to 3BUNE! 3BUNE is a small PHP tribune server designed for ease of setup.</p>
             <input type="text" id="ua" class="textinput" style="width: 100%;" placeholder="User-Agent"/>
+            <button id="send" class="send" onclick="refreshIframe()">Refresh</button>
         </div>
         <div class="vert"></div>
         <div class="vert" style="background-color: #000000A0; width: 71%; border-radius: 0px 50px 50px 0px;">
-            <iframe frameBorder="0" width="98%" height="90%" src="frontend.php#end" id="chatiframe"></iframe>
-            <input type="text" id="message" class="textinput" style="width: 92%;" placeholder="Message..."/><button id="send" class="send" onclick="PostToServer()">Send</button>
+            
+            <div style="width: 98%; height:90%; color:white; overflow-x: hidden; overflow-y: auto;" id="chat"></div>
+            <input type="text" id="message" class="textinput" style="width: 92%;" placeholder="Message..." required/><button id="send" class="send" onclick="PostToServer()">Send</button>
         </div>
         <br/>
         <div style="text-align: center;"><a style="color:white" href="https://pixabay.com/fr/photos/pissenlit-prairie-prairie-pissenlit-3382663/">Background Image</a></div>
@@ -60,15 +62,33 @@
 
         var focused = document.activeElement;
 
+        function TimeLookup(){
+            $("time#" + event.target.id).css("background-color", "yellow");
+            sleep(5000);
+            $("time#" + event.target.id).css("background-color", "none");
+        }
+        
         document.onkeypress = function (e) {
-            if (e.keyCode == 13) PostToServer();
+            if (e.keyCode == 13){
+                if(document.activeElement.id == "message") PostToServer();
+            }
         };
         
-
-        function refreshIframe() {
-            document.getElementById('chatiframe').contentDocument.location.reload(true);
+        function GetTime(){
+            // alert(event.target.innerHTML);
+            document.getElementById('message').value = "tag:" + event.target.innerHTML + " --- " + document.getElementById('message').value;
         }
 
+        function refreshIframe() {
+            fetch("/frontend.php").then(function(response) {
+                response.text().then(function(text) {
+                    document.getElementById('chat').innerHTML = text;
+                    document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+                    done();
+                });
+            });
+
+        }
         function sleep(milliseconds) {
             const date = Date.now();
             let currentDate = null;
@@ -78,11 +98,11 @@
         }
         function PostToServer(){
             
-            fetch('/icc_post.php?ua=' + document.getElementById('ua').value.trim().replace(/\s/g, '%20') + "&message="+ document.getElementById('message').value.trim().replace(/\s/g, '%20'));
-            
-            sleep(30);
-            document.getElementById('chatiframe').contentDocument.location.reload(true);
+            fetch('/post.php?ua=' + document.getElementById('ua').value.trim().replace(/\s/g, '%20') + "&message="+ document.getElementById('message').value.trim().replace(/\s/g, '%20'));
             document.getElementById('message').value = "";
+            sleep(20);
+            refreshIframe();
+            
             
         }
     </script>
