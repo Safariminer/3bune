@@ -5,6 +5,7 @@
             
             body{
                 background-image: url("dandelion.jpg");
+                background-size: 100%;
             }
             .vert {
                 float: left;
@@ -18,12 +19,12 @@
                 /*border: none;*/
                 border-color: black;
                 color: white;
-                padding: 15px 32px;
+                padding: 1%;
                 text-align: center;
                 text-decoration: none;
                 display: inline-block;
-                border-radius:5px;
-                font-size: 16px;
+                border-radius:2px;
+                font-size: 10px;
             }
             .textinput{
                 background: rgb(180,180,180);
@@ -31,11 +32,11 @@
                 /*border: none;*/
                 border-style: solid;
                 border-color: black;
-                padding: 15px 32px;
+                padding: 1%;
                 text-decoration: none;
                 display: inline-block;
                 border-radius:2px;
-                font-size: 16px;
+                font-size: 10px;
             }
             .highlighted{
                 background-color: red;
@@ -44,19 +45,20 @@
     </head>
     <body onload="refreshIframe()">
         <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-        <div class="vert" style="background-color: #5bcefa80; border-radius: 50px 0px 0px 50px; width: 25%; text-align: center;">
-            <h1>\\\ 3BUNE</h1>
-            <h2>Frutiger Tribune Coin-coin</h2>
-            <p>Welcome to 3BUNE! 3BUNE is a small PHP tribune server designed for ease of setup.<br/><a href="smallcoincoin.html">Switch to smaller coincoin</a><br/></p>
-            <input type="text" id="ua" class="textinput" style="width: 100%;" placeholder="User-Agent"/>
-            <button id="send" class="send" onclick="refreshIframe()">Refresh</button><br/><br/>
-            <input type="number" id="refreshrate" placeholder="Refresh rate..." value="5000" minimum="500"/>
-        </div>
-        <div class="vert"></div>
-        <div class="vert" style="background-color: #000000A0; width: 71%; border-radius: 0px 50px 50px 0px;">
+        <div>
+            <div class="vert" style="background-color: #5bcefa80; border-radius: 50px 0px 0px 50px; width: 22%; text-align: center; overflow-x: hidden; overflow-y: auto;">
+                <h1>\\\ 3BUNE</h1>
+                <h2>Frutiger Tribune Coin-coin</h2>
+                <p>Welcome to 3BUNE! 3BUNE is a small PHP tribune server designed for ease of setup.<br/><a href="coincoin.html">Switch to bigger coincoin</a></p>
+                <input type="text" id="ua" class="textinput" style="width: 100%;" placeholder="User-Agent"/>
+                <button id="send" class="send" onclick="refreshIframe()">Refresh</button><br/><br/>
+                <input type="number" id="refreshrate" placeholder="Refresh rate..." value="5000" minimum="500"/>
+            </div>
+            <div class="vert" style="background-color: #000000A0; width: 70%; border-radius: 0px 50px 50px 0px;">
             
-            <div style="width: 98%; height:90%; color:white; overflow-x: hidden; overflow-y: auto;" id="chat"></div>
-            <input type="text" id="message" class="textinput" style="width: 92%;" placeholder="Message..." required/><button id="send" class="send" onclick="PostToServer()">Send</button>
+                <div style="width: 98%; height:90%; color:white; overflow-x: hidden; overflow-y: auto;" id="chat"></div>
+                <input type="text" id="message" class="textinput" style="width: 90%;" placeholder="Message..." required/><button id="send" class="send" onclick="PostToServer()">Send</button>
+            </div>
         </div>
         <br/>
         <div style="text-align: center;"><a style="color:white" href="https://pixabay.com/fr/photos/pissenlit-prairie-prairie-pissenlit-3382663/">Background Image</a></div>
