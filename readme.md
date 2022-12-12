@@ -6,6 +6,11 @@
 - PHP 8
 - This picture from Pixabay: https://pixabay.com/fr/photos/pissenlit-prairie-prairie-pissenlit-3382663/
 
+## Special Thanks:
+- Lily aka Lilymonad who contributed code to 3BUNE
+- Aqueuse for testing
+- JeCodeLeSoir for competitiveness' sake.
+
 ## To-do
 ### Bouchot
 - Posting system
