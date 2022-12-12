@@ -10,6 +10,7 @@
 - Lily aka Lilymonad who contributed code to 3BUNE
 - Aqueuse for testing
 - JeCodeLeSoir for competitiveness' sake.
+- Chrisix for making OLCC
 
 ## To-do
 ### Bouchot
