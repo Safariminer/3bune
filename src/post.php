@@ -9,7 +9,12 @@ if(isset($_REQUEST['ua'])){
 $message = $_REQUEST['message'];
 $message = str_replace(array('#{plus}#', '#{amp}#', '#{dcomma}#', '#{percent}#'), array(urlencode('+'), urlencode('&'), '%3B', '%25'), $message);
 
+include 'config.php';
+
+$message = str_ireplace($threebune_banlist, $threebune_replacement, $message);
+
 $ua = str_replace(array('#{plus}#', '#{amp}#', '#{dcomma}#', '#{percent}#'), array(urlencode('+'), urlencode('&'), '%3B', '%25'), $ua);
+$ua = str_ireplace($threebune_banlist, $threebune_replacement, $ua);
 
 $referer = $_REQUEST['posturl'];
 $referer = substr($referer, 0, strrpos($referer, '/')+1);

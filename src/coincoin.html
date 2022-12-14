@@ -1,143 +1,35 @@
 <html>
     <head>
         <title>3BUNE Coin Coin</title>
-        <style>
-            
-            body{
-                background-image: url("dandelion.jpg");
-            }
-            .vert {
-                float: left;
-                height: 90%;
-                padding: 0 10px;
-            }
-
-            .send{
-                background: rgb(65,101,181);
-                background: linear-gradient(0deg, rgba(65,101,181,1) 42%, rgba(53,168,204,1) 84%, rgba(0,212,255,1) 100%); 
-                /*border: none;*/
-                border-color: black;
-                color: white;
-                padding: 15px 32px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                border-radius:5px;
-                font-size: 16px;
-            }
-            .textinput{
-                background: rgb(180,180,180);
-                background: linear-gradient(0deg, rgba(180,180,180,1) 42%, rgba(217,217,217,1) 65%, rgba(255,255,255,1) 100%); 
-                /*border: none;*/
-                border-style: solid;
-                border-color: black;
-                padding: 15px 32px;
-                text-decoration: none;
-                display: inline-block;
-                border-radius:2px;
-                font-size: 16px;
-            }
-            .highlighted{
-                background-color: red;
-            }
-        </style>
+        <link rel="stylesheet" href="big.css" />
+        <link rel="stylesheet" href="small.css" />
     </head>
     <body onload="refreshIframe()">
         <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-        <div class="vert" style="background-color: #5bcefa80; border-radius: 50px 0px 0px 50px; width: 25%; text-align: center;">
+        <div class="vert" style="background-color: #5bcefab0; border-radius: 10px 0px 0px 10px; width: 25%; text-align: center; overflow-x: hidden; overflow-y: auto; box-shadow: 10px 10px 5px rgb(125, 187, 207);">
             <h1>\\\ 3BUNE</h1>
             <h2>Frutiger Tribune Coin-coin</h2>
-            <p>Welcome to 3BUNE! 3BUNE is a small PHP tribune server designed for ease of setup.<br/><a href="smallcoincoin.html">Switch to smaller coincoin</a><br/></p>
+            <p>Welcome to 3BUNE! 3BUNE is a small PHP tribune server designed for ease of setup.<br/><button onclick="Resister()">Switch size</button><br/></p>
             <input type="text" id="ua" class="textinput" style="width: 100%;" placeholder="User-Agent"/>
             <button id="send" class="send" onclick="refreshIframe()">Refresh</button><br/><br/>
             <input type="number" id="refreshrate" placeholder="Refresh rate..." value="5000" minimum="500"/>
+            <br/>
+            <br/>
+            <input type="text" id="totozfinder" class="textinput" style="width: 100%;" placeholder="Find totoz..."/>
+            <button id="findtotoz" class="send" onclick="FindTotoz()">Search</button>
+            <div id="totozmanager" style="background-color:white; width: 100%; height: 500px; overflow-x: hidden; overflow-y: auto;"></div>
         </div>
-        <div class="vert"></div>
-        <div class="vert" style="background-color: #000000A0; width: 71%; border-radius: 0px 50px 50px 0px;">
-            
-            <div style="width: 98%; height:90%; color:white; overflow-x: hidden; overflow-y: auto;" id="chat"></div>
-            <input type="text" id="message" class="textinput" style="width: 92%;" placeholder="Message..." required/><button id="send" class="send" onclick="PostToServer()">Send</button>
+        <div class="vert" style="width: 71%;">
+            <div style="background-color: #303030f0; border-radius: 0px 10px 10px 0px; box-shadow: 10px 10px 5px rgb(72, 75, 77);">
+                <div style="width: 98%; height:90%; color:white; overflow-x: hidden; overflow-y: auto;" id="chat"></div>
+            </div>
+            <div style="height:10%; background-color: #6dd394f0; border-radius: 0px 10px 10px 0px; box-shadow: 10px 10px 5px rgb(40, 158, 93);">
+                <br/>
+                <input type="text" id="message" class="textinput" style="width: 92%;" placeholder="Message..." required/><button id="send" class="send" onclick="PostToServer()">Send</button>
+            </div>
         </div>
         <br/>
-        <div style="text-align: center;"><a style="color:white" href="https://pixabay.com/fr/photos/pissenlit-prairie-prairie-pissenlit-3382663/">Background Image</a></div>
+        <div style="text-align: center;"><a style="color:white" href="https://github.com/safariminer/3bune">Background Images</a></div>
     </body>
-    <script>
-        var intervalID = window.setInterval(refreshIframe, document.getElementById('refreshrate').value);
-        function ResetRefreshRate(){
-            if(document.getElementById('refreshrate').value < 500) document.getElementById('refreshrate').value = 500;
-            clearTimeout(intervalID)
-            intervalID = window.setInterval(refreshIframe, document.getElementById('refreshrate').value);
-        }
-        var focused = document.activeElement;
-
-        function TimeLookup(){
-            $("." + event.target.innerHTML).addClass(".highlighted");
-            sleep(5000);
-            $("." + event.target.innerHTML).removeClass(".highlighted");
-        }
-        
-        document.onkeypress = function (e) {
-            if (e.keyCode == 13){
-                if(document.activeElement.id == "message") PostToServer();
-                if(document.activeElement.id == "refreshrate")ResetRefreshRate();
-            }
-        };
-        
-        String.prototype.toUnicode = function(){
-            var result = "";
-            for(var i = 0; i < this.length; i++){
-                // Assumption: all characters are < 0xffff
-                result += "\\u" + ("000" + this[i].charCodeAt(0).toString(16)).substr(-4);
-            }
-            return result;
-        };
-        var lastnorloge = "";
-        function GetTime(){
-            // alert(event.target.innerHTML);
-
-            document.getElementById('message').value = "tag:" + event.target.innerHTML + " --- " + document.getElementById('message').value;
-            if(lastnorloge != ""){
-                var lasttemp = document.querySelectorAll(lastnorloge);
-                for (var i = 0; i < lasttemp.length; i++) {
-                    lasttemp[i].style.color = "white";
-                    lasttemp[i].style.backgroundColor = "black";
-                }
-            }
-            var selector = ".id" + event.target.innerHTML;
-            console.log(selector)
-            var temp = document.querySelectorAll(selector);
-            for (var i = 0; i < temp.length; i++) {
-                temp[i].style.color = "black";
-                temp[i].style.backgroundColor = "yellow";
-            }
-            lastnorloge = selector;
-            
-        }
-
-        function refreshIframe() {
-            fetch("/frontend.php").then(function(response) {
-                response.text().then(function(text) {
-                    document.getElementById('chat').innerHTML = text;
-                    document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
-                });
-            });
-
-        }
-        function sleep(milliseconds) {
-            const date = Date.now();
-            let currentDate = null;
-            do {
-                currentDate = Date.now();
-            } while (currentDate - date < milliseconds);
-        }
-        function PostToServer(){
-            
-            fetch('/post.php?ua=' + document.getElementById('ua').value.trim().replace(/\s/g, '%20') + "&message="+ document.getElementById('message').value.trim().replace(/\s/g, '%20'));
-            document.getElementById('message').value = "";
-            sleep(20);
-            refreshIframe();
-            
-            
-        }
-    </script>
+    <script src="coincoin.js"></script>
 </html>

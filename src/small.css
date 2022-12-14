@@ -1,0 +1,38 @@
+body{
+    background-image: url("dandelion.jpg");
+    background-size: 100%;
+}
+.vert {
+    float: left;
+    height: 90%;
+    padding: 0 10px;
+}
+
+.send{
+    background: rgb(65,101,181);
+    background: linear-gradient(0deg, rgba(65,101,181,1) 42%, rgba(53,168,204,1) 84%, rgba(0,212,255,1) 100%); 
+    /*border: none;*/
+    border-color: black;
+    color: white;
+    padding: 1%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius:2px;
+    font-size: 10px;
+}
+.textinput{
+    background: rgb(180,180,180);
+    background: linear-gradient(0deg, rgba(180,180,180,1) 42%, rgba(217,217,217,1) 65%, rgba(255,255,255,1) 100%); 
+    /*border: none;*/
+    border-style: solid;
+    border-color: black;
+    padding: 1%;
+    text-decoration: none;
+    display: inline-block;
+    border-radius:2px;
+    font-size: 10px;
+}
+.highlighted{
+    background-color: red;
+}

@@ -6,12 +6,15 @@ function TreatString($message): string{
     // of the message, generate a clickable object to get to the message
     // with same 14 digits timestamp
     $finalmessage = preg_replace(
-        "/^tag:([0-9]{14})/",
+        "/tag:([0-9]{14})/",
         
         "tag:<span class=\"id$1\" mouseover\"TimeLookup()\"" .
         " onclick=\"GetTime()\">$1</span> ---",
         
         htmlentities($message));
+
+    $finalmessage = str_replace("[:", "<img src=\"https://totoz.eu/img/", $finalmessage);
+    $finalmessage = str_replace("]", "\">", $finalmessage);
 
     return (string)$finalmessage;
 }

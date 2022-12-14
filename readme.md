@@ -7,6 +7,7 @@ Join the public test tribune: https://tribune.safariminer.repl.co/coincoin.html
 - jQuery
 - PHP 8
 - This picture from Pixabay: https://pixabay.com/fr/photos/pissenlit-prairie-prairie-pissenlit-3382663/
+- This picture: https://www.camptocamp.org/images/738130/fr/glacier-de-moiry-pte-de-mourti
 
 ## Special Thanks:
 - Lily aka Lilymonad who contributed code to 3BUNE

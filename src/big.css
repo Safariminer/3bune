@@ -1,0 +1,43 @@
+@import url("https://oscdn.safariminer.repl.co/selawik/selawik.css");
+
+body{
+    background-image: url("glacier.jpg");
+    font-family: 'Selawik Regular';
+    background-size: 100%;
+    
+}
+
+.vert {
+    float: left;
+    height: 90%;
+    padding: 0 10px;
+}
+
+.send{
+    background: rgb(65,101,181);
+    background: linear-gradient(0deg, rgba(65,101,181,1) 42%, rgba(53,168,204,1) 84%, rgba(0,212,255,1) 100%); 
+    /*border: none;*/
+    border-color: black;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius:5px;
+    font-size: 16px;
+}
+.textinput{
+    background: rgb(180,180,180);
+    background: linear-gradient(0deg, rgba(180,180,180,1) 42%, rgba(217,217,217,1) 65%, rgba(255,255,255,1) 100%); 
+    /*border: none;*/
+    border-style: solid;
+    border-color: rgb(111, 111, 111);
+    padding: 15px 32px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius:1px;
+    font-size: 16px;
+}
+.highlighted{
+    background-color: red;
+}
