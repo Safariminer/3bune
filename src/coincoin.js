@@ -51,7 +51,7 @@ function GetTime(){
     
 
 function refreshIframe() {
-    fetch("/frontend.php").then(function(response) {
+    fetch("/frontend.php?ua=" + document.getElementById('ua').value.trim().replace(/\s/g, '%20')).then(function(response) {
         response.text().then(function(text) {
             document.getElementById('chat').innerHTML = text;
             document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;

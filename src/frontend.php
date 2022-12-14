@@ -12,10 +12,13 @@ function TreatString($message): string{
         " onclick=\"GetTime()\">$1</span> ---",
         
         htmlentities($message));
+    
+    $finalmessage = str_ireplace(htmlentities($_REQUEST["ua"] . "<"), "<span style=\"background-color: red;\">" . $_REQUEST["ua"] . htmlentities("<") . "</span>", $finalmessage);
 
     $finalmessage = str_replace("[:", "<img src=\"https://totoz.eu/img/", $finalmessage);
+    
     $finalmessage = str_replace("]", "\">", $finalmessage);
-
+    
     return (string)$finalmessage;
 }
 
