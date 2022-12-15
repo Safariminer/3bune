@@ -57,6 +57,10 @@ function refreshIframe() {
             document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
         });
     });
+    let htmlElements = document.getElementsByTagName("img");
+    for (let i = 0; i < htmlElements.length; i++) {
+        htmlElements[i].setAttribute("title", htmlElements[i].getAttribute("src").replace("https://totoz.eu/img/", "[:") + "]");
+    }
 }
 
 function FindTotoz(){
