@@ -16,7 +16,7 @@ function TreatString($message): string{
     $finalmessage = str_ireplace(htmlentities($_REQUEST["ua"] . "<"), "<span style=\"background-color: red;\">" . $_REQUEST["ua"] . htmlentities("<") . "</span>", $finalmessage);
     
     $finalmessage = preg_replace(
-        "/\[:([0-z]{1,500})\]/",
+        "/\[:([0-z\s]{1,500})\]/",
         
         "<img src=\"https://totoz.eu/img/$1\" title=\"$1\"" .
         " onclick=\"alert('Looking at: [:$1]')\">",
