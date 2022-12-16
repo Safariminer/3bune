@@ -1,8 +1,6 @@
 # \\\\\ 3BUNE
 3BUNE is a fully-featured tribune complete with its bouchot and coincoin.
 
-Join the public test tribune: https://tribune.safariminer.repl.co/coincoin.html
-
 ## Uses:
 - jQuery
 - PHP 8
