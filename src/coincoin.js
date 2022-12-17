@@ -51,7 +51,7 @@ function GetTime(){
     
 
 function refreshIframe() {
-    fetch("/frontend.php?ua=" + document.getElementById('ua').value.trim().replace(/\s/g, '%20')).then(function(response) {
+    fetch("frontend.php?ua=" + document.getElementById('ua').value.trim().replace(/\s/g, '%20')).then(function(response) {
         response.text().then(function(text) {
             document.getElementById('chat').innerHTML = text;
             document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
@@ -61,7 +61,7 @@ function refreshIframe() {
 }
 
 function FindTotoz(){
-    fetch("/totozmanager.php?q=" + document.getElementById("totozfinder").value).then(function(response) {
+    fetch("totozmanager.php?q=" + document.getElementById("totozfinder").value).then(function(response) {
         response.text().then(function(text) {
             document.getElementById('totozmanager').innerHTML = text;
         });
@@ -81,7 +81,7 @@ function sleep(milliseconds) {
 }
 function PostToServer(){
     
-    fetch('/post.php?ua=' + document.getElementById('ua').value.trim().replace(/\s/g, '%20') + "&message="+ document.getElementById('message').value.trim().replace(/\s/g, '%20'));
+    fetch('post.php?ua=' + encodeURIComponent(document.getElementById('ua').value) + "&message="+ encodeURIComponent(document.getElementById('message').value));
     document.getElementById('message').value = "";
     sleep(20);
     refreshIframe();
