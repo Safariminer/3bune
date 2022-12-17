@@ -81,7 +81,7 @@ function sleep(milliseconds) {
 }
 function PostToServer(){
     
-    fetch('post.php?ua=' + encodeURIComponent(document.getElementById('ua').value) + "&message="+ encodeURIComponent(document.getElementById('message').value));
+    fetch('post.php?ua=' + encodeURI(document.getElementById('ua').value) + "&message="+ encodeURI(document.getElementById('message').value));
     document.getElementById('message').value = "";
     sleep(20);
     refreshIframe();
