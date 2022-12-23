@@ -12,7 +12,10 @@ function TreatString($message): string{
     $finalmessage = str_ireplace(htmlentities($_REQUEST["ua"] . "<"), "<span style=\"background-color: red;\">" . $_REQUEST["ua"] . htmlentities("< ") . "</span>", $finalmessage);
     $finalmessage = preg_replace("/==&gt;[\s|&#xA0;]([0-z\s&gt;&lt;]+)[\s|&#xA0;]&lt;==/", "<b style=\"color:yellow\">==&gt; $1 &lt;==</b>", $finalmessage);
     $finalmessage = preg_replace("/\">==&gt; nbsp;/", "\">==&gt; ", $finalmessage);
+    $finalmessage = preg_replace("/\[steam:([0-9]+)\]/", "<a style=\"color:#5bcefa;\" href=\"https://store.steampowered.com/app/$1\">[steam:$1]</a>", $finalmessage);
     $finalmessage = preg_replace("/\[:([^\]]+)\]/", "<img src=\"https://totoz.eu/img/$1\" title=\"$1\" onclick=\"alert('Looking at: [:$1]')\">", $finalmessage);
+    $finalmessage = preg_replace("/\*\*(.+)\*\*/", "<b>$1</b>", $finalmessage);
+    $finalmessage = preg_replace("/\*(.+)\*/", "<i>$1</i>", $finalmessage);
     
     // $finalmessage = str_replace("[:", "<img src=\"https://totoz.eu/img/", $finalmessage);
     
