@@ -63,13 +63,14 @@ function ClearTime(){
 // as far as i can see this is the latest commit with an actual iframe:
 // https://github.com/Safariminer/3bune/commit/6585d0bcba2f50f19ec7033c8ea931ba0aa5d665
 function refreshIframe() {
+    document.getElementById("refreshbutton").innerHTML = "Refreshing...";
     fetch("frontend.php?ua=" + document.getElementById('ua').value.trim().replaceAll(/\s/g, '%20')).then(function(response) {
         response.text().then(function(text) {
             document.getElementById('chat').innerHTML = text;
             document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
         });
     });
-    
+    document.getElementById("refreshbutton").innerHTML = "Refresh";
 }
 
 // can you guess what these two are for?
@@ -102,4 +103,40 @@ function PostToServer(){
     refreshIframe();
     
     // posting
+}
+
+// This is plain stolen from: https://www.w3schools.com/js/js_cookies.asp
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    let expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let ca = document.cookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+// thank you w3schools, you are amazing
+
+function SaveUsername(){
+    setCookie("username", document.getElementById('ua').value, 1500); // should be long enough kekw
+}
+
+function onloadfunc(){
+    document.getElementById('ua').value = getCookie("username");
+    if(getCookie("username") == ""){
+        document.getElementById('ua').value = "anonymous moule";
+    }
+    refreshIframe();
 }

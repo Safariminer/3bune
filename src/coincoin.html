@@ -4,14 +4,14 @@
         <link rel="stylesheet" href="big.css" />
         <link rel="stylesheet" href="small.css" />
     </head>
-    <body onload="refreshIframe()">
+    <body onload="onloadfunc()">
         <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
         <div class="vert" style="background-color: #5bcefab0; border-radius: 10px 0px 0px 10px; width: 25%; text-align: center; overflow-x: hidden; overflow-y: auto; box-shadow: 10px 10px 5px rgb(125, 187, 207);">
             <h1>\\\ 3BUNE</h1>
             <h2>Frutiger Tribune Coin-coin</h2>
             <p>Welcome to 3BUNE! 3BUNE is a small PHP tribune server designed for ease of setup.<br/><button onclick="Resister()">Switch size</button><br/></p>
             <input type="text" id="ua" class="textinput" style="width: 100%;" value="anonymous moule" placeholder="User-Agent"/>
-            <button id="send" class="send" onclick="refreshIframe()">Refresh</button><br/><br/>
+            <button id="refreshbutton" class="send" onclick="refreshIframe()">Refresh</button><button id="send" class="send" onclick="SaveUsername()">Save User-Agent</button><br/><br/>
             <input type="number" id="refreshrate" placeholder="Refresh rate..." value="5000" minimum="500"/>
             <br/>
             <br/>
