@@ -14,6 +14,8 @@ $message = str_ireplace($threebune_banlist, $threebune_replacement, $message);
 
 $ua = str_replace(array('#{plus}#', '#{amp}#', '#{dcomma}#', '#{percent}#'), array('+', '&', ';', '%'), $ua);
 $ua = str_ireplace($threebune_banlist, $threebune_replacement, $ua);
+$message= str_replace("%C2%A0", " ", $message);
+$ua = str_replace("%C2%A0", " ", $ua);
 
 $referer = $_REQUEST['posturl'];
 $referer = substr($referer, 0, strrpos($referer, '/')+1);

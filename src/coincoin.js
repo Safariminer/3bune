@@ -35,17 +35,13 @@ document.onkeypress = function (e) {
 
 var lastnorloge = "";
 // this is the norloge function thingy
-function GetTime(){
-    document.getElementById('message').value = document.getElementById('message').value + " " + event.target.innerHTML + " ";
-    if(lastnorloge != ""){
-        // this creates a kind of history
-        var lasttemp = document.querySelectorAll(lastnorloge);
-        for (var i = 0; i < lasttemp.length; i++) {
-            lasttemp[i].style.color = "white";
-            lasttemp[i].style.backgroundColor = "black";
-        }
+function GetTime(istruenorloge = false){
+    if(istruenorloge) {
+        document.getElementById('message').value = document.getElementById('message').value + " " + event.target.innerHTML + " ";
     }
+    
     var selector = ".id" + event.target.innerHTML.replaceAll("T", "").replaceAll(":", "").replaceAll("-", "");
+
     console.log(selector)
     var temp = document.querySelectorAll(selector);
     for (var i = 0; i < temp.length; i++) {
@@ -54,6 +50,14 @@ function GetTime(){
     }
     lastnorloge = selector;
 };
+
+function ClearTime(){
+    var lasttemp = document.querySelectorAll(lastnorloge);
+    for (var i = 0; i < lasttemp.length; i++) {
+        lasttemp[i].style.color = "white";
+        lasttemp[i].style.backgroundColor = "";
+    }
+}
     
 // before you ask, YES, at SOME POINT in 3BUNE's development, there WAS an actual iframe.
 // as far as i can see this is the latest commit with an actual iframe:
@@ -92,7 +96,7 @@ function sleep(milliseconds) {
 
 function PostToServer(){
     
-    fetch('post.php?ua=' + encodeURI(document.getElementById('ua').value).replaceAll("&", "%26").replaceAll("+", "%2B").replaceAll("#", "%23") + "&message="+ encodeURI(document.getElementById('message').value).replaceAll("&", "%26").replaceAll("+", "%2B").replaceAll("#", "%23"));
+    fetch('post.php?ua=' + encodeURI(document.getElementById('ua').value).replaceAll("&", "%26").replaceAll("+", "%2B").replaceAll("#", "%23").replace(/[\u200B-\u200D\uFEFF]/g, '').replaceAll(" ", "%20") + "&message="+ encodeURI(document.getElementById('message').value).replaceAll("&", "%26").replaceAll("+", "%2B").replaceAll("#", "%23").replace(/[\u200B-\u200D\uFEFF]/g, '').replaceAll(" ", "%20"));
     document.getElementById('message').value = "";
     sleep(20);
     refreshIframe();
