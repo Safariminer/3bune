@@ -2,20 +2,17 @@
 // Converts backend.xml into actual HTML for the chat
 
 function TreatString($message): string{
-    // if there is a "tag:..." with 14 digits after at the beginning
-    // of the message, generate a clickable object to get to the message
-    // with same 14 digits timestamp
+    // here's the actual standard code
     $finalmessage = preg_replace(
-        "/tag:([0-9]{14})/",
-        
-        "tag:<span class=\"id$1\" mouseover\"TimeLookup()\"" .
-        " onclick=\"GetTime()\">$1</span> ---",
-        
-        htmlentities($message));
+        "/([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})/",
+        "<span class=\"$1$2$3$4$5$6\" onclick=\"GetTime()\">$1-$2-$3T$4:$5:$6</span>",
+        htmlentities($message)
+    );
     
-    $finalmessage = str_ireplace(htmlentities($_REQUEST["ua"] . "<"), "<span style=\"background-color: red;\">" . $_REQUEST["ua"] . htmlentities("<") . "</span>", $finalmessage);
-    
+    $finalmessage = str_ireplace(htmlentities($_REQUEST["ua"] . "<"), "<span style=\"background-color: red;\">" . $_REQUEST["ua"] . htmlentities("< ") . "</span>", $finalmessage);
+    $finalmessage = preg_replace("/==&gt; ([0-z\s]+) &lt;==/", "<b style=\"color:yellow\">==&gt; $1 &lt;==</b>", $finalmessage);
     $finalmessage = preg_replace("/\[:([0-z\s]+)\]/", "<img src=\"https://totoz.eu/img/$1\" title=\"$1\" onclick=\"alert('Looking at: [:$1]')\">", $finalmessage);
+    
     // $finalmessage = str_replace("[:", "<img src=\"https://totoz.eu/img/", $finalmessage);
     
     // $finalmessage = str_replace("]", "\">", $finalmessage);
@@ -29,8 +26,8 @@ $messagelist->load('backend.xml');
 $messages = $messagelist->getElementsByTagName('post');
 
 foreach($messages as $message){
-    echo "<time mouseover=\"TimeLookup()\" onclick=\"GetTime()\" class=\"id" . $message->getAttribute('time') . "\">" . $message->getAttribute('time') . "</time> | " . htmlentities($message->childNodes->item(0)->textContent) . " : " . TreatString($message->childNodes->item(1)->textContent) . "<br/>";
-
+    echo "<time mouseover=\"TimeLookup()\" onclick=\"GetTime()\" class=\"id" . preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/","$1$2$3$4$5$6\">$1-$2-$3T$4:$5:$6</time>", $message->getAttribute('time')) . " | " . htmlentities($message->childNodes->item(0)->textContent) . " : " . TreatString($message->childNodes->item(1)->textContent) . "<br/>";
+    // holy sh&$@t that is one long line of code. 
 }
 
 ?>

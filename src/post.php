@@ -5,21 +5,18 @@ if(isset($_REQUEST['ua'])){
     $ua = $_REQUEST['ua'];
 }
 
-// This block of code was borrowed from OLCC
 $message = $_REQUEST['message'];
-$message = str_replace(array('#{plus}#', '#{amp}#', '#{dcomma}#', '#{percent}#'), array(urlencode('+'), urlencode('&'), '%3B', '%25'), $message);
+$message = str_replace(array('#{plus}#', '#{amp}#', '#{dcomma}#', '#{percent}#'), array('+', '&', ';', '%'), $message);
 
 include 'config.php';
 
 $message = str_ireplace($threebune_banlist, $threebune_replacement, $message);
 
-$ua = str_replace(array('#{plus}#', '#{amp}#', '#{dcomma}#', '#{percent}#'), array(urlencode('+'), urlencode('&'), '%3B', '%25'), $ua);
+$ua = str_replace(array('#{plus}#', '#{amp}#', '#{dcomma}#', '#{percent}#'), array('+', '&', ';', '%'), $ua);
 $ua = str_ireplace($threebune_banlist, $threebune_replacement, $ua);
 
 $referer = $_REQUEST['posturl'];
 $referer = substr($referer, 0, strrpos($referer, '/')+1);
-// End of borrowed from OLCC block. Yes it's only variable declarations. But half the file is that so...
-// Thank you Chrisix: https://github.com/chrisix/olcc
 
 $messnumstring = file_get_contents("messnum.txt");
 $messnum = (int)$messnumstring;
@@ -36,10 +33,15 @@ $domPost->appendChild($domPostid);
 $domPosttime = $messagelist->createAttribute("time");
 $domPosttime->value = date("YmdHis");
 $domPost->appendChild($domPosttime);
-$domPostInfo = $messagelist->createElement("info", $ua);
-$domPost->appendChild($domPostInfo);
-$domPostMessage = $messagelist->createElement("message", $message);
-$domPost->appendChild($domPostMessage);
+// add info child to post
+// we append $ua as a TextNode to $domPostInfo
+// because createElement HTML escaping is very weird
+$domPostInfo = $messagelist->createElement("info");
+$domPost->appendChild($domPostInfo)->appendChild($messagelist->createTextNode($ua));
+
+// add message child to post (same as info)
+$domPostMessage = $messagelist->createElement("message");
+$domPost->appendChild($domPostMessage)->appendChild($messagelist->createTextNode($message));
 
 $messagelist->getElementsByTagName('board')->item(0)->appendChild($domPost);
 //echo $messagelist->saveXML();
