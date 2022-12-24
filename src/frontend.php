@@ -16,6 +16,9 @@ function TreatString($message): string{
     $finalmessage = preg_replace("/\[:([^\]]+)\]/", "<img src=\"https://totoz.eu/img/$1\" title=\"$1\" onclick=\"alert('Looking at: [:$1]')\">", $finalmessage);
     $finalmessage = preg_replace("/\*\*(.+)\*\*/", "<b>$1</b>", $finalmessage);
     $finalmessage = preg_replace("/\*(.+)\*/", "<i>$1</i>", $finalmessage);
+    $finalmessage = preg_replace("/\[url:(.+)\]/", "<a style=\"color:#5bcefa;\" href=\"$1\">[url:$1]</a>", $finalmessage);
+    $finalmessage = str_ireplace("[welcomeuser]", "<div>" . file_get_contents("welcome.html") . "</div>", $finalmessage);
+    $finalmessage = preg_replace("/\[zoodelagommette:(.+)\]/", "<span style=\"color: #f11;background-color:darkgreen;\"><b>$1</b></span>", $finalmessage);
     
     // $finalmessage = str_replace("[:", "<img src=\"https://totoz.eu/img/", $finalmessage);
     
