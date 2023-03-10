@@ -15,4 +15,4 @@ foreach($totozlist as $totoz){
     echo "<br/><hr/>";
 }
 ?>
-<h1>You've reached the end of available totoz for <?php echo $_GET['q'];?>. </h1>
+<h1>You've reached the end of available totoz for <?php echo html_special_entities($_GET['q']);?>. </h1>
