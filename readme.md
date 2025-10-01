@@ -35,17 +35,12 @@ As 3BUNE is neither 100% standard nor finished yet, here are some features whose
             - Enigma encoding for all parties
 
 ## XML Backend Issues
+This is only relevant if you wish to use a different front-end.
+
 The current XML backend is non-standard even though 3BUNE tries to be as strictly abiding to the standard as possible.
 - BML is not a thing
 - For a while, custom tag:xxxxxxxxxxxxxx--- norloges were used which are non-standard
 - Even though the two main necessary endpoints are implemented(pure backend and post), the post endpoint doesn't return posts after id x when requested so.
-
-This disparity in standard is there for 5 main reasons:
-- I am lazy
-- The documentation available is scattered and the main one not only has a hidden section but also doesn't include plonking nor an example of raw BML as typed by the moule
-- I am lazy
-- I am using PHP which is not the best language for string parsing, even though it's a pretty good language for string parsing, I'd say, but it's also the one on which I used regex for the first time in my life, and thanks to Lilymonad for showing me the way of the regex, I appreciate it
-- I am lazy and would rather watch a Sam O'Nella video than crack up VS Code and write some damn PHP
 
 ## Uses:
 - jQuery
