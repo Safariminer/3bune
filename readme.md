@@ -78,4 +78,4 @@ This disparity in standard is there for 5 main reasons:
 - JeCodeLeSoir for competitiveness' sake.
 - Chrisix for making OLCC
 
-```3BUNE by Safariminer```
+```3BUNE by Safariminer | 2022-2025```
